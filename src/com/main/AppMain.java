@@ -11,9 +11,6 @@ public class AppMain {
 	public static void main(String[] args) {
 
 		List<Player> players = StaticData.getPlayers();
-		System.out.println(players);
-
-		System.out.println("Let's Play");
 		int overs = 4;
 		int runNeeded = 40;
 		CricketMatch match = new CricketMatch(overs, runNeeded);

@@ -11,13 +11,11 @@ public class CricketMatch {
 
 	private final int maximumBallsAllowed;
 	private final int runNeeded;
-
 	private Player playeOnStrike;
 	private Player nonStriker;
 	private int totalRunsScored;
 	private int actualBallsBowled;
 	private int wicketsFallen;
-	private int oversBowled;
 
 	private List<String> stats = new ArrayList<String>();
 
@@ -42,10 +40,6 @@ public class CricketMatch {
 
 	public Player getNonStriker() {
 		return nonStriker;
-	}
-
-	public int getOversBowled() {
-		return oversBowled;
 	}
 
 	public Player getPlayeOnStrike() {
@@ -76,10 +70,6 @@ public class CricketMatch {
 		this.nonStriker = nonStriker;
 	}
 
-	public void setOversBowled(int oversBowled) {
-		this.oversBowled = oversBowled;
-	}
-
 	public void setPlayeOnStrike(Player playeOnStrike) {
 		this.playeOnStrike = playeOnStrike;
 	}
@@ -106,133 +96,91 @@ public class CricketMatch {
 		playeOnStrike = players.get(0);
 		nonStriker = players.get(1);
 
-		/**
-		 * Index of players. It explains that how many players already played.
-		 */
-		int position = 1;
-
-		while (position < players.size()
-				&& actualBallsBowled < maximumBallsAllowed
+		while (actualBallsBowled < maximumBallsAllowed
 				&& totalRunsScored < runNeeded
 				&& wicketsFallen < players.size() - 1) {
 
-			boolean out = false;
+			// If player got out then bring the new Player.
+			getPlayerInCasePlayerOnStrikeGotOut(players);
 
-			String data = "";
 			int event = (int) Math.floor(Math.random() * 101);
-
-			actualBallsBowled++;
-
 			Map<EventType, Integer> stats = playeOnStrike.getPlayerStats();
+			// player played the balls
+			playTheBall();
 
 			/**
 			 * Now we need to progress as per the happened event.
 			 */
-			// 1. No run scored
+			// 1. No run scored & No wicket fallen
 			if (event <= stats.get(EventType.ZERO)) {
-				data = "No Run";
-				playeOnStrike
-						.setBallsPlayed(playeOnStrike.getBallsPlayed() + 1);
-
+				// do nothing
+				addRun(0);
 			}
 			// 2. one run scored
 			else if (event <= stats.get(EventType.ONE)) {
-
-				data = "1 run";
-				playeOnStrike.setRunScored(playeOnStrike.getRunScored() + 1);
-				playeOnStrike
-						.setBallsPlayed(playeOnStrike.getBallsPlayed() + 1);
-				// change the strike
+				addRun(1);
 				changeStrike();
-				totalRunsScored++;
 			}
 			// 3. two run scored
 			else if (event <= stats.get(EventType.TWO)) {
-
-				data = "2 runs";
-				playeOnStrike.setRunScored(playeOnStrike.getRunScored() + 2);
-				playeOnStrike
-						.setBallsPlayed(playeOnStrike.getBallsPlayed() + 1);
-				totalRunsScored += 2;
+				addRun(2);
 			}
 			// 4. three run scored
 			else if (event <= stats.get(EventType.THREE)) {
-				data = "3 runs";
-				playeOnStrike.setRunScored(playeOnStrike.getRunScored() + 3);
-				playeOnStrike
-						.setBallsPlayed(playeOnStrike.getBallsPlayed() + 1);
-				// change the strike
+				addRun(3);
 				changeStrike();
-				totalRunsScored += 3;
 			}
 			// 5. four run scored
 			else if (event < stats.get(EventType.FOUR)) {
-
-				data = "4 runs";
-				playeOnStrike.setRunScored(playeOnStrike.getRunScored() + 4);
-				playeOnStrike
-						.setBallsPlayed(playeOnStrike.getBallsPlayed() + 1);
-				totalRunsScored += 4;
+				addRun(4);
 			}
 
 			// 6. five run scored
 			else if (event < stats.get(EventType.FIVE)) {
-				data = "5 runs";
-				playeOnStrike.setRunScored(playeOnStrike.getRunScored() + 5);
-				playeOnStrike
-						.setBallsPlayed(playeOnStrike.getBallsPlayed() + 1);
-				// change the strike
+				addRun(5);
 				changeStrike();
-				totalRunsScored += 5;
 			}
 			// 7. six run scored
 			else if (event < stats.get(EventType.SIX)) {
-
-				data = "6 runs";
-				playeOnStrike.setRunScored(playeOnStrike.getRunScored() + 6);
-				playeOnStrike
-						.setBallsPlayed(playeOnStrike.getBallsPlayed() + 1);
-				totalRunsScored += 6;
+				addRun(6);
 			}
 
 			// 8. Player out
 			else if (event < stats.get(EventType.OUT)) {
-				out = true;
-
-				playeOnStrike.setOut(true);
-				// System.out.println(oversBowled + "." + actualBallsBowled +
-				// " "
-				// + playeOnStrike.getName() + " got out on "
-				// + playeOnStrike.getRunScored() + " runs");
-				this.stats.add(oversBowled + "." + actualBallsBowled + " "
-						+ playeOnStrike.getName() + " got out on "
-						+ playeOnStrike.getRunScored() + " runs");
+				setOut();
 				wicketsFallen++;
-				playeOnStrike
-						.setBallsPlayed(playeOnStrike.getBallsPlayed() + 1);
-				playeOnStrike = players.get(wicketsFallen);
 			}
-
-			if (!out) {
-				// System.out.println(oversBowled + "." + actualBallsBowled +
-				// " "
-				// + playeOnStrike.getName() + " scored " + data);
-
-				this.stats.add(oversBowled + "." + actualBallsBowled + " "
-						+ playeOnStrike.getName() + " scored " + data);
-				// System.out.println("Total runs scored : " + totalRunsScored);
-
-			}
-			out = false;
-			data = "";
 
 			if (actualBallsBowled % 6 == 0) {
-				// System.out.println("Over finished");
-				oversBowled++;
-				actualBallsBowled = 0;
 				changeStrike();
 			}
 		}
 
+	}
+
+	private void getPlayerInCasePlayerOnStrikeGotOut(List<Player> players) {
+		if (playeOnStrike.isOut()) {
+			playeOnStrike = players.get(wicketsFallen + 1);
+		}
+	}
+
+	private void setOut() {
+		playeOnStrike.setOut(true);
+		stats.add("" + actualBallsBowled / 6 + "." + actualBallsBowled % 6
+				+ " " + playeOnStrike.getName() + " got out on "
+				+ playeOnStrike.getRunScored() + " runs.");
+	}
+
+	private void addRun(int i) {
+		totalRunsScored += i;
+		playeOnStrike.setRunScored(playeOnStrike.getRunScored() + i);
+		stats.add("" + actualBallsBowled / 6 + "." + actualBallsBowled % 6
+				+ " " + playeOnStrike.getName() + " scores " + i
+				+ (i > 1 ? " runs." : " run."));
+	}
+
+	private void playTheBall() {
+		actualBallsBowled++;
+		playeOnStrike.setBallsPlayed(playeOnStrike.getBallsPlayed() + 1);
 	}
 }
