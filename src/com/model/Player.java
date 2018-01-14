@@ -50,6 +50,14 @@ public class Player {
 		return name;
 	}
 
+	public void madeRun(int runs) {
+		this.runScored += runs;
+	}
+
+	public void bowlPlayed() {
+		this.ballsPlayed++;
+	}
+
 	@Override
 	public String toString() {
 		return "Player [name=" + name + ", playerStats=" + playerStats

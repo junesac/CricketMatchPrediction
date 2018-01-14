@@ -17,7 +17,7 @@ public class AppMain {
 		match.startGame(players);
 
 		// Print match result
-		printMatchResult(match, runNeeded, players);
+		printMatchResult(match, runNeeded, overs, players);
 
 		// Need to add checks
 		printPlayerDetails(players);
@@ -28,14 +28,14 @@ public class AppMain {
 	}
 
 	private static void printMatchResult(CricketMatch match, int runNeeded,
-			List<Player> players) {
+			int overs, List<Player> players) {
 
 		if (match.getTotalRunsScored() >= runNeeded) {
 
-			System.out
-					.println("Lenaburu won the game by "
-							+ (players.size() - match.getWicketsFallen())
-							+ " Wickets.");
+			System.out.println("Lenaburu won the game by "
+					+ (players.size() - match.getWicketsFallen()) + " Wickets "
+					+ " and " + (6 * overs - match.getActualBallsBowled())
+					+ " balls to spare.");
 		} else {
 			System.out.println("Lenaburu lost the match by "
 					+ (runNeeded - match.getTotalRunsScored()) + " runs.");
