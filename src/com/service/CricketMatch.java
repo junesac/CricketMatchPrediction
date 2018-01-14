@@ -9,6 +9,7 @@ import com.model.Player;
 
 public class CricketMatch {
 
+	private final String teamName;
 	private final int maximumBallsAllowed;
 	private final int runNeeded;
 	private Player playeOnStrike;
@@ -19,9 +20,14 @@ public class CricketMatch {
 
 	private List<String> stats = new ArrayList<String>();
 
-	public CricketMatch(int overs, int runNeeded) {
+	public CricketMatch(String teamName, int overs, int runNeeded) {
+		this.teamName = teamName;
 		this.maximumBallsAllowed = 6 * overs;
 		this.runNeeded = runNeeded;
+	}
+
+	public String getTeamName() {
+		return teamName;
 	}
 
 	/**
@@ -29,7 +35,8 @@ public class CricketMatch {
 	 *
 	 * @param overs
 	 */
-	public CricketMatch(int overs) {
+	public CricketMatch(String teamName, int overs) {
+		this.teamName = teamName;
 		this.maximumBallsAllowed = 6 * overs;
 		this.runNeeded = Integer.MAX_VALUE;
 	}
