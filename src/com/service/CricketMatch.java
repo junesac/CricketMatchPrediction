@@ -171,12 +171,12 @@ public class CricketMatch {
 				+ playeOnStrike.getRunScored() + " runs.");
 	}
 
-	private void addRun(int i) {
-		totalRunsScored += i;
-		playeOnStrike.madeRun(i);
+	private void addRun(int run) {
+		totalRunsScored += run;
+		playeOnStrike.madeRun(run);
 		stats.add("" + actualBallsBowled / 6 + "." + actualBallsBowled % 6
-				+ " " + playeOnStrike.getName() + " scores " + i
-				+ (i > 1 ? " runs." : " run."));
+				+ " " + playeOnStrike.getName() + " scores " + run
+				+ (run > 1 ? " runs." : " run."));
 	}
 
 	private void playTheBall() {
