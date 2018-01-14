@@ -7,6 +7,14 @@ import java.util.List;
 import com.model.EventType;
 import com.model.Player;
 
+/**
+ * This class contains the static data. We could have take the input from user
+ * or from a file as well.
+ *
+ * @author user
+ *
+ */
+
 public class StaticData {
 
 	public static List<Player> getPlayers() {
