@@ -65,4 +65,31 @@ public class StaticData {
 		return stats;
 	}
 
+	public static List<Player> getPlayerForLengaBuruForTieBreaker() {
+
+		List<Player> players = new ArrayList<Player>();
+
+		players.add(new Player("Kirat Boli", createStats(5, 10, 25, 10, 25, 1,
+				14, 10)));
+
+		players.add(new Player("N.S.Nodhi", createStats(5, 15, 15, 10, 20, 1,
+				19, 15)));
+
+		return players;
+	}
+
+	public static List<Player> getPlayerForQueensForTieBreaker() {
+
+		List<Player> players = new ArrayList<Player>();
+
+		players.add(new Player("D B Velleyers ", createStats(5, 10, 25, 10, 25,
+				1, 14, 10)));
+
+		players.add(new Player("H Mamla", createStats(10, 15, 15, 10, 20, 1,
+				19, 10)));
+
+		return players;
+
+	}
+
 }

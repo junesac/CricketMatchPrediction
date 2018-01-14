@@ -24,6 +24,16 @@ public class CricketMatch {
 		this.runNeeded = runNeeded;
 	}
 
+	/**
+	 * In case of 1st innings
+	 *
+	 * @param overs
+	 */
+	public CricketMatch(int overs) {
+		this.maximumBallsAllowed = 6 * overs;
+		this.runNeeded = Integer.MAX_VALUE;
+	}
+
 	private void changeStrike() {
 		Player temp = playeOnStrike;
 		playeOnStrike = nonStriker;
